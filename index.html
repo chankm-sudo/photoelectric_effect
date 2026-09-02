@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Photoelectric Effect - Prison Escape Simulation</title>
+  <style>
+    :root {
+      --bg-color: #1a1d24;
+      --card-bg: #242832;
+      --accent-blue: #3b82f6;
+      --accent-green: #10b981;
+      --accent-red: #ef4444;
+      --accent-yellow: #f59e0b;
+      --text-main: #f3f4f6;
+      --text-muted: #9ca3af;
+      --border-color: #374151;
+    }
+
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+header h1 {
+  font-size: 1.8rem;
+  color: #ffffff;
+  margin-bottom: 6px;
+}
+
+header p {
+  color: var(--text-muted);
+  font-size: 0.95rem;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 20px;
+  width: 100%;
+  max-width: 1100px;
+}
+
+@media (max-width: 850px) {
+  .container {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* Controls Panel */
+.controls-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.playback-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.btn-playback {
+  background: #374151;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 10px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.btn-playback:hover {
+  background: #4b5563;
+}
+
+.btn-playback:active {
+  transform: scale(0.98);
+}
+
+.btn-pause {
+  background: #1e3a8a;
+  border-color: #3b82f6;
+}
+
+.btn-pause:hover {
+  background: #2563eb;
+}
+
+.btn-reset {
+  background: #7f1d1d;
+  border-color: #ef4444;
+}
+
+.btn-reset:hover {
+  background: #dc2626;
+}
+
+.control-group {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.control-group label {
+  font-weight: 600;
+  font-size: 0.9rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.control-group label .value-badge {
+  background: #374151;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  color: var(--accent-yellow);
+}
+
+input[type="range"], select {
+  width: 100%;
+  padding: 6px;
+  background: #111827;
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+.target-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+}
+
+.btn-target {
+  background: #1f2937;
+  border: 1px solid var(--border-color);
+  color: var(--text-main);
+  padding: 8px 4px;
+  border-radius: 6px;
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: center;
+}
+
+.btn-target.active {
+  background: var(--accent-blue);
+  border-color: var(--accent-blue);
+  font-weight: bold;
+}
+
+/* Simulation View */
+.sim-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.sim-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #111827;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-size: 0.9rem;
+}
+
+.sim-header .stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.sim-header .stat-value {
+  font-weight: bold;
+  color: var(--accent-green);
+  font-size: 1.1rem;
+}
+
+canvas {
+  width: 100%;
+  height: 420px;
+  background-color: #0f172a;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  display: block;
+}
+
+/* Reference Table */
+.reference-section {
+  margin-top: 24px;
+  width: 100%;
+  max-width: 1100px;
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.reference-section h2 {
+  font-size: 1.2rem;
+  margin-bottom: 12px;
+  color: var(--accent-blue);
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+th, td {
+  padding: 12px 14px;
+  border-bottom: 1px solid var(--border-color);
+  vertical-align: top;
+}
+
+th {
+  background: #111827;
+  color: var(--accent-blue);
+  font-weight: 700;
+  text-transform: uppercase;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+}
+
+tr:hover {
+  background: #2d3342;
+}
+
+.analogy-title {
+  font-weight: bold;
+  color: var(--text-main);
+}
+
+.physics-concept {
+  font-weight: bold;
+  color: var(--accent-yellow);
+}
+
+.badge-tag {
+  display: inline-block;
+  padding: 2px 6px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  margin-right: 4px;
+}
+.badge-surface { background: #0284c7; color: #fff; }
+.badge-mid { background: #4f46e5; color: #fff; }
+.badge-deep { background: #475569; color: #fff; }
+
+
+  </style>
+  <!-- KaTeX for LaTeX rendering -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body, {
+      delimiters: [
+        {left: '$$', right: '$$', display: true},
+        {left: '$', right: '$', display: false}
+      ],
+      throwOnError: false
+    });"></script>
+
+</head>
+<body>
+
+
+  <header>
+    <h1>✈️ Photoelectric Effect Simulator: Prison Escape</h1>
+    <p>Connecting macroscopic analogies to microscopic quantum physics phenomena.</p>
+  </header>
+
+
+  <div class="container">
+    <!-- Control Panel -->
+    <div class="controls-card">
+      <h3 style="color: var(--accent-blue);">Simulation Controls</h3>
+
+
+  <!-- Playback Controls (Pause / Play & Reset) -->
+  <div class="playback-buttons">
+    <button class="btn-playback btn-pause" id="btn-pause" onclick="togglePause()">
+      <span id="pause-icon">⏸️</span> <span id="pause-text">Pause</span>
+    </button>
+    <button class="btn-playback btn-reset" onclick="resetSimulation()">
+      <span>🔄</span> Reset
+    </button>
+  </div>
+
+  <!-- 1. Plane Target Position -->
+  <div class="control-group">
+    <label>Target Cell Position</label>
+    <div class="target-buttons">
+      <button class="btn-target active" id="btn-surface" onclick="setTarget('surface')">Surface<br><small>(Top Right: -1.0 eV)</small></button>
+      <button class="btn-target" id="btn-mid" onclick="setTarget('mid')">Mid-Depth<br><small>(Center: -4.0 eV)</small></button>
+      <button class="btn-target" id="btn-deep" onclick="setTarget('deep')">Deep Cell<br><small>(Bot Left: -8.0 eV)</small></button>
+    </div>
+  </div>
+
+  <!-- 2. Rescue Pack Size / Energy -->
+  <div class="control-group">
+    <label>
+      <span>Rescue Pack Energy (<i>E</i> = <i>hf</i>)</span>
+      <span class="value-badge" id="val-pack">5.0 eV</span>
+    </label>
+    <input type="range" id="input-pack" min="1" max="10" step="0.5" value="5" oninput="updateControls()">
+    <small style="color: var(--text-muted);">Higher energy corresponds to higher frequency (<i>f</i>).</small>
+  </div>
+
+  <!-- 3. Drop Rate / Intensity -->
+  <div class="control-group">
+    <label>
+      <span>Drop Rate / Light Intensity</span>
+      <span class="value-badge" id="val-rate">2 packs/s</span>
+    </label>
+    <input type="range" id="input-rate" min="1" max="5" value="2" oninput="updateControls()">
+    <small style="color: var(--text-muted);">Side-by-side packs dropped per second.</small>
+  </div>
+
+  <!-- 4. External Voltage -->
+  <div class="control-group">
+    <label>
+      <span>External Voltage (<i>V</i>)</span>
+      <span class="value-badge" id="val-voltage">0.0 V</span>
+    </label>
+    <input type="range" id="input-voltage" min="-5" max="5" step="0.5" value="0" oninput="updateControls()">
+    <small style="color: var(--text-muted);">-<i>V</i> = Guards (👮‍♂️) | +<i>V</i> = Attractors (💃)</small>
+  </div>
+
+  <!-- Live Physics Breakdown -->
+  <div style="background: #111827; padding: 12px; border-radius: 8px; font-size: 0.85rem; line-height: 1.5;">
+    <div style="color: var(--accent-yellow); font-weight: bold; margin-bottom: 4px;">Energy Balance (eV):</div>
+    <div>Photon Energy (<i>E</i>): <span id="calc-e">5.0 eV</span></div>
+    <div>Work Function (&Phi;): <span id="calc-phi">-1.0 eV</span></div>
+    <div>Kinetic Energy (<i>K</i><sub>0</sub>): <span id="calc-k" style="color: var(--accent-green); font-weight: bold;">4.0 eV</span></div>
+  </div>
+</div>
+
+<!-- Simulation View -->
+<div class="sim-card">
+  <div class="sim-header">
+    <div class="stat-item">
+      <span style="color: var(--text-muted); font-size: 0.75rem;">ESCAPE RATE</span>
+      <span class="stat-value" id="disp-rate">0.0 /s</span>
+    </div>
+    <div class="stat-item">
+      <span style="color: var(--text-muted); font-size: 0.75rem;">PHOTOCURRENT</span>
+      <span class="stat-value" id="disp-current">0.0 µA</span>
+    </div>
+    <div class="stat-item">
+      <span style="color: var(--text-muted); font-size: 0.75rem;">STATUS</span>
+      <span class="stat-value" id="disp-status" style="color: var(--accent-green);">Ready</span>
+    </div>
+  </div>
+
+  <canvas id="simCanvas" width="700" height="420"></canvas>
+</div>
+
+
+  </div>
+
+
+  <!-- Reference Mapping Table -->
+
+
+  <div class="reference-section">
+    <h2>📋 Pedagogical Mapping & Physics Reference Table</h2>
+    <table>
+      <thead>
+        <tr>
+          <th style="width: 25%;">Prison Escape Analogy (Simulator Element)</th>
+          <th style="width: 25%;">Photoelectric Effect Concept</th>
+          <th style="width: 50%;">Physical Meaning & Quantum Physics Explanation</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><span class="analogy-title">Prisoner</span> (🧗‍♂️ / 🏃‍♂️)</td>
+          <td><span class="physics-concept">Bound Electrons ($e^-$)</span></td>
+          <td>Subatomic particles trapped inside the potential well of the metal lattice structure. In this simulation, prisoners face right toward the collector anode.</td>
+        </tr>
+        <tr>
+          <td>
+            <span class="analogy-title">Prison Cell Depth</span><br>
+            <span class="badge-tag badge-surface">Surface (-1.0 eV)</span><br>
+            <span class="badge-tag badge-mid">Mid-Depth (-4.0 eV)</span><br>
+            <span class="badge-tag badge-deep">Deep Cell (-8.0 eV)</span>
+          </td>
+          <td>
+            <span class="physics-concept">Work Function ($\Phi$) & Binding Energy Levels</span>
+          </td>
+          <td>
+            <strong>Work Function ($\Phi = 1.0\text{ eV}$):</strong> Minimum energy required to liberate an electron from the outermost surface. Electrons in deeper energy levels require greater energy ($4.0\text{ eV}$ or $8.0\text{ eV}$) due to internal lattice scattering, generating a continuous kinetic energy spectrum ($0 \le K \le K_{\max}$).
+          </td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">High-Altitude Plane</span> (✈️)</td>
+          <td><span class="physics-concept">Incident Light Source</span></td>
+          <td>The radiation source positioned above the metal surface, delivering energy packets (photons) targeted at specific atomic depths.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Rescue Pack Batch</span> (📦)</td>
+          <td><span class="physics-concept">Photons ($E = hf$) & Energy Quantization</span></td>
+          <td>Light energy is quantized into discrete packets. Each single pack collides 1-on-1 with strictly one prisoner. Packs drop side-by-side, releasing a vertical column of escaping photoelectrons.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Supply Level / Pack Energy</span> ($1\text{ eV} - 10\text{ eV}$)</td>
+          <td><span class="physics-concept">Light Frequency ($f$)</span></td>
+          <td>Determines individual photon energy $E = hf$. Photon energy must equal or exceed binding magnitude ($E \ge |\Phi|$) for photoelectron emission to occur; surplus energy converts into kinetic energy.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Drop Rate / Batch Quantity</span> ($1 - 5\text{ packs/s}$)</td>
+          <td><span class="physics-concept">Light Intensity (Photon Flux)</span></td>
+          <td>Number of incident photons per second. Increasing drop rate raises the photoelectron release count and photocurrent ($I \propto N_e$), but does <em>not</em> increase individual particle stamina/speed.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Prisoner Speed & Stamina</span></td>
+          <td><span class="physics-concept">Kinetic Energy ($K = E - |\Phi|$)</span></td>
+          <td>Remaining energy of freed electrons: $K_0 = E - |\Phi|$. For surface electrons, this represents the maximum kinetic energy $K_{\max} = hf - \Phi$. If $K_0 = 0\text{ eV}$, photoelectrons emerge briefly but lack velocity to reach the anode unless accelerated by $+V$.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Guards</span> (👮‍♂️ / $-V$)</td>
+          <td><span class="physics-concept">Retarding Voltage / Reverse Bias</span></td>
+          <td>Opposing electric field decelerating electrons. If $E - |\Phi| - |V_{\text{ret}}| < 0$, photoelectrons lose all kinetic energy before reaching the collector, turn around facing left, and retreat into the prison cell. The voltage reducing photocurrent to zero is the <strong>Stopping Potential ($V_s$)</strong> where $eV_s = K_{\max}$.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Attractors</span> (💃 / $+V$)</td>
+          <td><span class="physics-concept">Accelerating Voltage / Forward Bias</span></td>
+          <td>Forward electric field pulling emitted photoelectrons toward the anode, raising photocurrent until reaching the <strong>Saturation Current</strong>.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Escape Endpoint</span> (🎯)</td>
+          <td><span class="physics-concept">Anode / Collector Terminal</span></td>
+          <td>The receiving terminal that collects emitted photoelectrons to close the external circuit.</td>
+        </tr>
+        <tr>
+          <td><span class="analogy-title">Average Escape Rate</span> ($\text{people/s}$)</td>
+          <td><span class="physics-concept">Photocurrent ($I_{\text{photo}}$)</span></td>
+          <td>Rate of photoelectrons successfully reaching the anode per unit time ($I_{\text{photo}} = \frac{\Delta q}{\Delta t}$, displayed in $\mu\text{A}$).</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+
+  <script>
+    const canvas = document.getElementById('simCanvas');
+    const ctx = canvas.getContext('2d');
+
+    // State Variables
+    let isPaused = false;
+    let targetCell = 'surface'; // 'surface', 'mid', 'deep'
+    let packEnergy = 5.0;
+    let dropRate = 2;
+    let voltage = 0.0;
+
+    let planeX = 230;
+    let lastDropTime = 0;
+
+    // Sliding Window for Escape Rate / Photocurrent Calculation
+    let reachEvents = [];
+
+    // Game Entities
+    let packs = [];
+    let escapingPrisoners = [];
+    let failureEffects = [];
+
+    // Cell Threshold Configuration (in eV)
+    const thresholds = {
+      surface: -1.0,
+      mid: -4.0,
+      deep: -8.0
+    };
+
+    // Cell Coordinates inside Metal Block (60, 280, 220, 120)
+    // Surface: Top Right (230, 280)
+    // Mid: Center (170, 320)
+    // Deep: Bottom Left (110, 360)
+    const cellPositions = {
+      surface: { x: 230, y: 280, label: 'Surface (-1 eV)' },
+      mid:     { x: 170, y: 320, label: 'Mid (-4 eV)' },
+      deep:    { x: 110, y: 360, label: 'Deep (-8 eV)' }
+    };
+
+    function togglePause() {
+      isPaused = !isPaused;
+      const pauseIcon = document.getElementById('pause-icon');
+      const pauseText = document.getElementById('pause-text');
+
+      if (isPaused) {
+        pauseIcon.innerText = '▶️';
+        pauseText.innerText = 'Play';
+      } else {
+        pauseIcon.innerText = '⏸️';
+        pauseText.innerText = 'Pause';
+        lastDropTime = performance.now();
+        requestAnimationFrame(animate);
+      }
+    }
+
+    function resetSimulation() {
+      packs = [];
+      escapingPrisoners = [];
+      failureEffects = [];
+      reachEvents = [];
+
+      packEnergy = 5.0;
+      dropRate = 2;
+      voltage = 0.0;
+
+      document.getElementById('input-pack').value = 5;
+      document.getElementById('input-rate').value = 2;
+      document.getElementById('input-voltage').value = 0;
+
+      setTarget('surface');
+      updateControls();
+
+      planeX = cellPositions['surface'].x;
+      lastDropTime = performance.now();
+
+      document.getElementById('disp-rate').innerText = '0.0 /s';
+      document.getElementById('disp-current').innerText = '0.0 µA';
+
+      if (isPaused) {
+        drawFrame(performance.now());
+      }
+    }
+
+    function setTarget(type) {
+      targetCell = type;
+      document.querySelectorAll('.btn-target').forEach(btn => btn.classList.remove('active'));
+      document.getElementById(`btn-${type}`).classList.add('active');
+      updateControls();
+    }
+
+    function updateControls() {
+      packEnergy = parseFloat(document.getElementById('input-pack').value);
+      dropRate = parseInt(document.getElementById('input-rate').value);
+      voltage = parseFloat(document.getElementById('input-voltage').value);
+
+      document.getElementById('val-pack').innerText = `${packEnergy.toFixed(1)} eV`;
+      document.getElementById('val-rate').innerText = `${dropRate} packs/s`;
+      document.getElementById('val-voltage').innerText = `${voltage >= 0 ? '+' : ''}${voltage.toFixed(1)} V`;
+
+      const phiVal = thresholds[targetCell];
+      const phiMag = Math.abs(phiVal);
+      const k = packEnergy - phiMag;
+
+      document.getElementById('calc-e').innerText = `${packEnergy.toFixed(1)} eV`;
+      document.getElementById('calc-phi').innerText = `${phiVal.toFixed(1)} eV`;
+      document.getElementById('calc-k').innerText = k >= 0 ? `${k.toFixed(1)} eV` : '0.0 eV';
+
+      const statusEl = document.getElementById('disp-status');
+      if (k < 0) {
+        statusEl.innerText = '❌ Insufficient Energy';
+        statusEl.style.color = '#ef4444';
+      } else if (k === 0) {
+        statusEl.innerText = '⚠️ Threshold Met (0 eV)';
+        statusEl.style.color = '#f59e0b';
+      } else {
+        statusEl.innerText = '✅ Energy Sufficient';
+        statusEl.style.color = '#10b981';
+      }
+    }
+
+    // Main Loop & Frame Drawing
+    function drawFrame(now) {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // 1. Draw Background Elements
+      drawEnvironment();
+
+      // 2. Animate High Altitude Plane
+      const targetPos = cellPositions[targetCell];
+      planeX += (targetPos.x - planeX) * 0.08;
+      drawPlane(planeX, 50);
+
+      // 3. Handle Dropping Rescue Packs Side by Side
+      if (!isPaused && now - lastDropTime > 1000) {
+        const count = dropRate;
+        const spacing = 22;
+        const startX = planeX - ((count - 1) * spacing) / 2;
+
+        for (let i = 0; i < count; i++) {
+          packs.push({
+            x: startX + i * spacing,
+            y: 60,
+            targetY: targetPos.y,
+            energy: packEnergy,
+            cellType: targetCell,
+            batchIndex: i,
+            batchCount: count
+          });
+        }
+        lastDropTime = now;
+      }
+
+      // 4. Update and Draw Rescue Packs
+      for (let i = packs.length - 1; i >= 0; i--) {
+        let p = packs[i];
+        if (!isPaused) p.y += 4;
+        drawPack(p);
+
+        // Check Collision with Target Cell
+        if (p.y >= p.targetY) {
+          const phiMag = Math.abs(thresholds[p.cellType]);
+          const k = p.energy - phiMag;
+
+          if (k >= 0) {
+            const totalHeight = (p.batchCount - 1) * 20;
+            const targetGroundY = 240 - (totalHeight / 2) + (p.batchIndex * 20);
+
+            escapingPrisoners.push({
+              x: targetPos.x,
+              y: p.targetY,
+              targetGroundY: targetGroundY,
+              energy: p.energy,
+              stamina: k,
+              cellType: p.cellType,
+              spawnX: targetPos.x,
+              state: 'moving_right', // 'moving_right' or 'returning_left'
+              vx: 0,
+              direction: 1, // 1 = facing right, -1 = facing left
+              zeroEnergyLife: (k === 0) ? 70 : null
+            });
+          } else {
+            failureEffects.push({
+              x: p.x,
+              y: p.targetY,
+              life: 30
+            });
+          }
+          packs.splice(i, 1);
+        }
+      }
+
+      // Render Failure Effects
+      for (let i = failureEffects.length - 1; i >= 0; i--) {
+        let fe = failureEffects[i];
+        ctx.fillStyle = `rgba(239, 68, 68, ${fe.life / 30})`;
+        ctx.font = '11px sans-serif';
+        ctx.fillText('❌ Low Energy', fe.x - 25, fe.y - 10);
+        if (!isPaused) fe.life--;
+        if (fe.life <= 0) failureEffects.splice(i, 1);
+      }
+
+      // 5. Update and Draw Escaping Prisoners
+      for (let i = escapingPrisoners.length - 1; i >= 0; i--) {
+        let pr = escapingPrisoners[i];
+
+        if (!isPaused) {
+          const totalDist = 600 - pr.spawnX;
+          const phiMag = Math.abs(thresholds[pr.cellType]);
+          const k0 = pr.energy - phiMag;
+
+          if (k0 === 0 && voltage <= 0) {
+            pr.vx = 0.25;
+            pr.x += pr.vx;
+            pr.direction = 1;
+            if (pr.zeroEnergyLife !== null) {
+              pr.zeroEnergyLife--;
+            }
+          } else if (voltage >= 0) {
+            const frac = Math.max(0, (pr.x - pr.spawnX) / totalDist);
+            const kCurrent = k0 + voltage * frac;
+            pr.vx = Math.sqrt(Math.max(0.05, kCurrent)) * 1.2 + 0.3;
+            pr.x += pr.vx;
+            pr.direction = 1;
+          } else {
+            const vRet = Math.abs(voltage);
+            const kNetCollector = k0 - vRet;
+
+            if (kNetCollector >= 0) {
+              const frac = Math.max(0, (pr.x - pr.spawnX) / totalDist);
+              const kCurrent = k0 - vRet * frac;
+              pr.vx = Math.sqrt(Math.max(0.05, kCurrent)) * 1.2 + 0.3;
+              pr.x += pr.vx;
+              pr.direction = 1;
+            } else {
+              const turnFrac = vRet > 0 ? Math.min(1, Math.max(0, k0 / vRet)) : 0;
+              const xTurn = pr.spawnX + totalDist * turnFrac;
+
+              if (pr.state === 'moving_right') {
+                if (pr.x < xTurn) {
+                  const frac = Math.max(0, (pr.x - pr.spawnX) / totalDist);
+                  const kCurrent = Math.max(0.05, k0 - vRet * frac);
+                  pr.vx = Math.sqrt(kCurrent) * 1.2 + 0.3;
+                  pr.x += pr.vx;
+                  pr.direction = 1;
+                  if (pr.x >= xTurn) {
+                    pr.x = xTurn;
+                    pr.state = 'returning_left';
+                  }
+                } else {
+                  pr.state = 'returning_left';
+                }
+              }
+
+              if (pr.state === 'returning_left') {
+                const distFromTurn = xTurn - pr.x;
+                const retSpeed = Math.sqrt(Math.max(0.1, distFromTurn * 0.05)) * 1.2 + 0.8;
+                pr.vx = -retSpeed;
+                pr.x += pr.vx;
+                pr.direction = -1;
+              }
+            }
+          }
+
+          pr.y += (pr.targetGroundY - pr.y) * 0.12;
+        }
+
+        drawPrisoner(pr);
+
+        if (pr.zeroEnergyLife !== null && pr.zeroEnergyLife <= 0) {
+          escapingPrisoners.splice(i, 1);
+        } else if (pr.x >= 600) {
+          reachEvents.push(now);
+          escapingPrisoners.splice(i, 1);
+        } else if (pr.x <= pr.spawnX && pr.direction === -1) {
+          escapingPrisoners.splice(i, 1);
+        }
+      }
+
+      // 6. Update Real-Time Rate & Photocurrent
+      const windowTime = 2000;
+      reachEvents = reachEvents.filter(t => now - t <= windowTime);
+      const escapeRate = (reachEvents.length / (windowTime / 1000)).toFixed(1);
+      const photocurrent = (escapeRate * 1.6).toFixed(1);
+
+      document.getElementById('disp-rate').innerText = `${escapeRate} people/s`;
+      document.getElementById('disp-current').innerText = `${photocurrent} µA`;
+    }
+
+    function animate(now) {
+      drawFrame(now);
+      if (!isPaused) {
+        requestAnimationFrame(animate);
+      }
+    }
+
+    // Drawing Helpers
+    function drawEnvironment() {
+      // Sky
+      ctx.fillStyle = '#0f172a';
+      ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+      // Ground / Prison Block
+      ctx.fillStyle = '#1e293b';
+      ctx.fillRect(60, 280, 220, 120);
+
+      ctx.strokeStyle = '#475569';
+      ctx.lineWidth = 2;
+      ctx.strokeRect(60, 280, 220, 120);
+
+      ctx.fillStyle = '#94a3b8';
+      ctx.font = '12px sans-serif';
+      ctx.fillText('PRISON (METAL matrix)', 70, 395);
+
+      // Draw Cells
+      drawCell(cellPositions.surface, targetCell === 'surface');
+      drawCell(cellPositions.mid, targetCell === 'mid');
+      drawCell(cellPositions.deep, targetCell === 'deep');
+
+      // Collector Endpoint (Anode 🎯)
+      ctx.fillStyle = '#334155';
+      ctx.fillRect(600, 160, 20, 160);
+      ctx.fillStyle = '#ef4444';
+      ctx.beginPath();
+      ctx.arc(610, 240, 15, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#ffffff';
+      ctx.font = '14px sans-serif';
+      ctx.fillText('🎯', 602, 245);
+      ctx.fillText('COLLECTOR (ANODE)', 550, 340);
+
+      // Field Visualizer (Guards / Attractors)
+      if (voltage < 0) {
+        ctx.fillStyle = 'rgba(239, 68, 68, 0.1)';
+        ctx.fillRect(280, 160, 320, 160);
+        ctx.fillStyle = '#ef4444';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(`👮‍♂️ Retarding Field (Guards: ${voltage.toFixed(1)}V)`, 360, 180);
+      } else if (voltage > 0) {
+        ctx.fillStyle = 'rgba(16, 185, 129, 0.1)';
+        ctx.fillRect(280, 160, 320, 160);
+        ctx.fillStyle = '#10b981';
+        ctx.font = '12px sans-serif';
+        ctx.fillText(`💃 Accelerating Field (Attractors: +${voltage.toFixed(1)}V)`, 350, 180);
+      }
+    }
+
+    function drawCell(pos, isActive) {
+      ctx.fillStyle = isActive ? '#38bdf8' : '#334155';
+      ctx.fillRect(pos.x - 20, pos.y - 10, 40, 20);
+      ctx.strokeStyle = isActive ? '#f59e0b' : '#64748b';
+      ctx.strokeRect(pos.x - 20, pos.y - 10, 40, 20);
+
+      ctx.fillStyle = isActive ? '#fef08a' : '#94a3b8';
+      ctx.font = '10px sans-serif';
+      ctx.fillText(pos.label, pos.x - 30, pos.y - 14);
+    }
+
+    function drawPlane(x, y) {
+      ctx.font = '28px sans-serif';
+      ctx.fillText('✈️', x - 14, y);
+    }
+
+    function drawPack(pack) {
+      ctx.font = '16px sans-serif';
+      ctx.fillText('📦', pack.x - 8, pack.y);
+    }
+
+    function drawPrisoner(pr) {
+      ctx.save();
+
+      if (pr.zeroEnergyLife !== null && pr.zeroEnergyLife < 30) {
+        ctx.globalAlpha = Math.max(0, pr.zeroEnergyLife / 30);
+      }
+
+      ctx.translate(pr.x, pr.y);
+
+      if (pr.direction === 1) {
+        ctx.scale(-1, 1);
+      } else {
+        ctx.scale(1, 1);
+      }
+
+      ctx.font = '18px sans-serif';
+      const icon = Math.abs(pr.vx) > 0.1 ? '🏃‍♂️' : '🚶‍♂️';
+      ctx.fillText(icon, -9, 6);
+
+      ctx.restore();
+
+      if (pr.stamina === 0 && pr.zeroEnergyLife !== null) {
+        ctx.fillStyle = '#f59e0b';
+        ctx.font = '9px sans-serif';
+        ctx.fillText('0 eV', pr.x - 10, pr.y - 12);
+      }
+    }
+
+    // Initialize Controls and Start Animation
+    updateControls();
+    requestAnimationFrame(animate);
+  </script>
+
+
+</body>
+</html>
