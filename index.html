@@ -301,6 +301,7 @@
       throwOnError: false
     });"></script>
 
+<base target="_blank">
 </head>
 <body>
 
@@ -397,79 +398,79 @@
 
    <!-- Reference Mapping Table -->
   <div class="reference-section">
-    <h2>📋 Pedagogical Mapping & Physics Reference Table</h2>
+    <h2>📋 Pedagogical Mapping: Photoelectric Effect vs. Prison Escape Analogy</h2>
     <table>
       <thead>
         <tr>
-          <th style="width: 25%;">Prison Escape Analogy (Simulator Element)</th>
-          <th style="width: 25%;">Photoelectric Effect Concept</th>
-          <th style="width: 50%;">Physical Meaning & Quantum Physics Explanation</th>
+          <th style="width: 25%;">Analogy Element</th>
+          <th style="width: 25%;">Physical Concept</th>
+          <th style="width: 50%;">Scientific Explanation & Key Formula</th>
         </tr>
       </thead>
       <tbody>
         <tr>
-          <td><span class="analogy-title">Prisoner</span> (🧗‍♂️ / 🏃‍♂️)</td>
-          <td><span class="physics-concept">Bound Electrons ($e^-$)</span></td>
-          <td>Subatomic particles trapped inside the potential well of the metal lattice structure. In this simulation, prisoners face right toward the collector anode.</td>
+          <td><span class="analogy-title">Prisoner</span> (🧗‍♂️)</td>
+          <td><span class="physics-concept">Bound Electron ($e^-$)</span></td>
+          <td>Conduction electron trapped within the metal's potential well.</td>
         </tr>
         <tr>
           <td>
-            <span class="analogy-title">Prison Cell Depth</span><br>
-            <span class="badge-tag badge-surface">Surface (-1.0 eV)</span><br>
-            <span class="badge-tag badge-mid">Mid-Depth (-4.0 eV)</span><br>
-            <span class="badge-tag badge-deep">Deep Cell (-8.0 eV)</span>
+            <span class="analogy-title">Cell Depth</span><br>
+            <span class="badge-tag badge-surface">Surface ($-1.0\text{ eV}$)</span><br>
+            <span class="badge-tag badge-mid">Mid ($-4.0\text{ eV}$)</span><br>
+            <span class="badge-tag badge-deep">Deep ($-8.0\text{ eV}$)</span>
           </td>
           <td>
-            <span class="physics-concept">Work Function ($\Phi$) & Binding Energy Levels</span>
+            <span class="physics-concept">Work Function ($\Phi$) & Binding Energy</span>
           </td>
           <td>
-            <strong>Work Function ($\Phi = 1.0\text{ eV}$):</strong> Minimum energy required to liberate an electron from the outermost surface. Electrons in deeper energy levels require greater energy ($4.0\text{ eV}$ or $8.0\text{ eV}$) due to internal lattice scattering, generating a continuous kinetic energy spectrum ($0 \le K \le K_{\max}$).
+            $\Phi$ is the minimum energy to liberate a surface electron ($1.0\text{ eV}$). Deeper electrons require more energy, resulting in an energy spectrum: $0 \le K \le K_{\text{max}}$.
           </td>
         </tr>
         <tr>
-          <td><span class="analogy-title">High-Altitude Plane</span> (✈️)</td>
+          <td><span class="analogy-title">Airplane</span> (✈️)</td>
           <td><span class="physics-concept">Incident Light Source</span></td>
-          <td>The radiation source positioned above the metal surface, delivering energy packets (photons) targeted at specific atomic depths.</td>
+          <td>Source providing radiation of a given frequency and intensity.</td>
         </tr>
         <tr>
-          <td><span class="analogy-title">Rescue Pack Batch</span> (📦)</td>
-          <td><span class="physics-concept">Photons ($E = hf$) & Energy Quantization</span></td>
-          <td>Light energy is quantized into discrete packets. Each single pack collides 1-on-1 with strictly one prisoner. Packs drop side-by-side, releasing a vertical column of escaping photoelectrons.</td>
+          <td><span class="analogy-title">Supply Pack</span> (📦)</td>
+          <td><span class="physics-concept">Photon ($E = hf$)</span></td>
+          <td>Discrete quantum of light. Collides in a strict $1\text{-to-}1$ interaction with a single electron.</td>
         </tr>
         <tr>
-          <td><span class="analogy-title">Supply Level / Pack Energy</span> ($1\text{ eV} - 10\text{ eV}$)</td>
-          <td><span class="physics-concept">Light Frequency ($f$)</span></td>
-          <td>Determines individual photon energy $E = hf$. Photon energy must equal or exceed binding magnitude ($E \ge |\Phi|$) for photoelectron emission to occur; surplus energy converts into kinetic energy.</td>
+          <td><span class="analogy-title">Pack Energy</span> ($1\text{--}10\text{ eV}$)</td>
+          <td><span class="physics-concept">Photon Frequency ($f$)</span></td>
+          <td>Governs photon energy ($E = hf$). Photoemission occurs only if $E \ge \Phi$; excess energy converts to kinetic energy.</td>
         </tr>
         <tr>
-          <td><span class="analogy-title">Drop Rate / Batch Quantity</span> ($1 - 5\text{ packs/s}$)</td>
+          <td><span class="analogy-title">Drop Rate</span> ($1\text{--}5\text{ packs/s}$)</td>
           <td><span class="physics-concept">Light Intensity (Photon Flux)</span></td>
-          <td>Number of incident photons per second. Increasing drop rate raises the photoelectron release count and photocurrent ($I \propto N_e$), but does <em>not</em> increase individual particle stamina/speed.</td>
+          <td>Number of photons per second. Determines emission rate and saturation photocurrent ($I \propto N_{\text{photons}}$), but not electron speed.</td>
         </tr>
         <tr>
-          <td><span class="analogy-title">Prisoner Speed & Stamina</span></td>
-          <td><span class="physics-concept">Kinetic Energy ($K = E - |\Phi|$)</span></td>
-          <td>Remaining energy of freed electrons: $K_0 = E - |\Phi|$. For surface electrons, this represents the maximum kinetic energy $K_{\max} = hf - \Phi$. If $K_0 = 0\text{ eV}$, photoelectrons emerge briefly but lack velocity to reach the anode unless accelerated by $+V$.</td>
+          <td><span class="analogy-title">Escaped Speed & Stamina</span></td>
+          <td><span class="physics-concept">Kinetic Energy ($K$)</span></td>
+          <td>Energy after liberation: $K = E - \text{Binding Energy}$. Maximum kinetic energy is given by: $$K_{\text{max}} = hf - \Phi$$</td>
         </tr>
         <tr>
           <td><span class="analogy-title">Guards</span> (👮‍♂️ / $-V$)</td>
-          <td><span class="physics-concept">Retarding Voltage / Reverse Bias</span></td>
-          <td>Opposing electric field decelerating electrons. If $E - |\Phi| - |V_{\text{ret}}| < 0$, photoelectrons lose all kinetic energy before reaching the collector, turn around facing left, and retreat into the prison cell. The voltage reducing photocurrent to zero is the <strong>Stopping Potential ($V_s$)</strong> where $eV_s = K_{\max}$.</td>
+          <td><span class="physics-concept">Retarding Potential ($V_{\text{stop}}$)</span></td>
+          <td>Opposing electric field decelerating electrons. Current reaches zero when stopping potential satisfies: $$eV_s = K_{\text{max}}$$</td>
         </tr>
         <tr>
           <td><span class="analogy-title">Attractors</span> (💃 / $+V$)</td>
-          <td><span class="physics-concept">Accelerating Voltage / Forward Bias</span></td>
-          <td>Forward electric field pulling emitted photoelectrons toward the anode, raising photocurrent until reaching the <strong>Saturation Current</strong>.</td>
+          <td><span class="physics-concept">Accelerating Potential / Forward Bias</span></td>
+          <td>Forward electric field sweeping emitted electrons to the anode until reaching saturation current ($I_{\text{sat}}$).</td>
         </tr>
         <tr>
           <td><span class="analogy-title">Escape Endpoint</span> (🎯)</td>
-          <td><span class="physics-concept">Anode / Collector Terminal</span></td>
-          <td>The receiving terminal that collects emitted photoelectrons to close the external circuit.</td>
+          <td><span class="physics-concept">Collector / Anode</span></td>
+          <td>Electrode that collects photoelectrons to complete the external circuit.</td>
         </tr>
         <tr>
-          <td><span class="analogy-title">Average Escape Rate</span> ($\text{people/s}$)</td>
-          <td><span class="physics-concept">Photocurrent ($I_{\text{photo}}$)</span></td>
-          <td>Rate of photoelectrons successfully reaching the anode per unit time ($I_{\text{photo}} = \frac{\Delta q}{\Delta t}$, displayed in $\mu\text{A}$).</td>
+          <td><span class="analogy-title">Escape Rate</span> (people/s)</td>
+          <td><span class="physics-concept">Photocurrent ($I$)</span></td>
+          <td>Rate of charge arrival at the collector: $$I = \frac{\Delta q}{\Delta t}$$</td>
         </tr>
       </tbody>
     </table>
