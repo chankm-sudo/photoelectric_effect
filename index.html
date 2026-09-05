@@ -1,6 +1,4 @@
 <!DOCTYPE html>
-
-
 <html lang="en">
 <head>
   <meta charset="UTF-8">
@@ -19,394 +17,373 @@
       --border-color: #374151;
     }
 
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+    }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-}
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-main);
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+    }
 
-body {
-  background-color: var(--bg-color);
-  color: var(--text-main);
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  min-height: 100vh;
-}
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+    }
 
-header {
-  text-align: center;
-  margin-bottom: 20px;
-}
+    header h1 {
+      font-size: 1.8rem;
+      color: #ffffff;
+      margin-bottom: 6px;
+    }
 
-header h1 {
-  font-size: 1.8rem;
-  color: #ffffff;
-  margin-bottom: 6px;
-}
+    header p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+    }
 
-header p {
-  color: var(--text-muted);
-  font-size: 0.95rem;
-}
+    .container {
+      display: grid;
+      grid-template-columns: 320px 1fr;
+      gap: 20px;
+      width: 100%;
+      max-width: 1100px;
+    }
 
-.container {
-  display: grid;
-  grid-template-columns: 320px 1fr;
-  gap: 20px;
-  width: 100%;
-  max-width: 1100px;
-}
+    @media (max-width: 850px) {
+      .container {
+        grid-template-columns: 1fr;
+      }
+    }
 
-@media (max-width: 850px) {
-  .container {
-    grid-template-columns: 1fr;
-  }
-}
+    /* Controls Panel */
+    .controls-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
 
-/* Controls Panel */
-.controls-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-}
+    .playback-buttons {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
 
-.playback-buttons {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 8px;
-}
+    .btn-playback {
+      background: #374151;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 10px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      transition: background 0.2s ease, transform 0.1s ease;
+    }
 
-.btn-playback {
-  background: #374151;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 8px 10px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  font-weight: 600;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 6px;
-  transition: background 0.2s ease, transform 0.1s ease;
-}
+    .btn-playback:hover {
+      background: #4b5563;
+    }
 
-.btn-playback:hover {
-  background: #4b5563;
-}
+    .btn-playback:active {
+      transform: scale(0.98);
+    }
 
-.btn-playback:active {
-  transform: scale(0.98);
-}
+    .btn-pause {
+      background: #1e3a8a;
+      border-color: #3b82f6;
+    }
 
-.btn-pause {
-  background: #1e3a8a;
-  border-color: #3b82f6;
-}
+    .btn-pause:hover {
+      background: #2563eb;
+    }
 
-.btn-pause:hover {
-  background: #2563eb;
-}
+    .btn-reset {
+      background: #7f1d1d;
+      border-color: #ef4444;
+    }
 
-.btn-reset {
-  background: #7f1d1d;
-  border-color: #ef4444;
-}
+    .btn-reset:hover {
+      background: #dc2626;
+    }
 
-.btn-reset:hover {
-  background: #dc2626;
-}
+    .control-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
 
-.control-group {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
-}
+    .control-group label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
 
-.control-group label {
-  font-weight: 600;
-  font-size: 0.9rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
+    .control-group label .value-badge {
+      background: #374151;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: var(--accent-yellow);
+    }
 
-.control-group label .value-badge {
-  background: #374151;
-  padding: 2px 8px;
-  border-radius: 6px;
-  font-size: 0.85rem;
-  color: var(--accent-yellow);
-}
+    input[type="range"], select {
+      width: 100%;
+      padding: 6px;
+      background: #111827;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      color: white;
+      outline: none;
+      cursor: pointer;
+    }
 
-input[type="range"], select {
-  width: 100%;
-  padding: 6px;
-  background: #111827;
-  border: 1px solid var(--border-color);
-  border-radius: 6px;
-  color: white;
-  outline: none;
-  cursor: pointer;
-}
+    .target-buttons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
 
-.target-buttons {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 6px;
-}
+    .btn-target {
+      background: #1f2937;
+      border: 1px solid var(--border-color);
+      color: var(--text-main);
+      padding: 8px 4px;
+      border-radius: 6px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      text-align: center;
+    }
 
-.btn-target {
-  background: #1f2937;
-  border: 1px solid var(--border-color);
-  color: var(--text-main);
-  padding: 8px 4px;
-  border-radius: 6px;
-  font-size: 0.8rem;
-  cursor: pointer;
-  transition: all 0.2s ease;
-  text-align: center;
-}
+    .btn-target.active {
+      background: var(--accent-blue);
+      border-color: var(--accent-blue);
+      font-weight: bold;
+    }
 
-.btn-target.active {
-  background: var(--accent-blue);
-  border-color: var(--accent-blue);
-  font-weight: bold;
-}
+    /* Simulation View */
+    .sim-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 16px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
 
-/* Simulation View */
-.sim-card {
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
-}
+    .sim-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: #111827;
+      padding: 10px 16px;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
 
-.sim-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background: #111827;
-  padding: 10px 16px;
-  border-radius: 8px;
-  font-size: 0.9rem;
-}
+    .sim-header .stat-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
-.sim-header .stat-item {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
+    .sim-header .stat-value {
+      font-weight: bold;
+      color: var(--accent-green);
+      font-size: 1.1rem;
+    }
 
-.sim-header .stat-value {
-  font-weight: bold;
-  color: var(--accent-green);
-  font-size: 1.1rem;
-}
+    canvas {
+      width: 100%;
+      height: 420px;
+      background-color: #0f172a;
+      border-radius: 8px;
+      border: 1px solid var(--border-color);
+      display: block;
+    }
 
-canvas {
-  width: 100%;
-  height: 420px;
-  background-color: #0f172a;
-  border-radius: 8px;
-  border: 1px solid var(--border-color);
-  display: block;
-}
+    /* Reference Table */
+    .reference-section {
+      margin-top: 24px;
+      width: 100%;
+      max-width: 1100px;
+      background: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 12px;
+      padding: 20px;
+    }
 
-/* Reference Table */
-.reference-section {
-  margin-top: 24px;
-  width: 100%;
-  max-width: 1100px;
-  background: var(--card-bg);
-  border: 1px solid var(--border-color);
-  border-radius: 12px;
-  padding: 20px;
-}
+    .reference-section h2 {
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+      color: var(--accent-blue);
+    }
 
-.reference-section h2 {
-  font-size: 1.2rem;
-  margin-bottom: 12px;
-  color: var(--accent-blue);
-}
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: left;
+      font-size: 0.88rem;
+      line-height: 1.5;
+    }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  text-align: left;
-  font-size: 0.88rem;
-  line-height: 1.5;
-}
+    th, td {
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border-color);
+      vertical-align: top;
+    }
 
-th, td {
-  padding: 12px 14px;
-  border-bottom: 1px solid var(--border-color);
-  vertical-align: top;
-}
+    th {
+      background: #111827;
+      color: var(--accent-blue);
+      font-weight: 700;
+      text-transform: uppercase;
+      font-size: 0.8rem;
+      letter-spacing: 0.5px;
+    }
 
-th {
-  background: #111827;
-  color: var(--accent-blue);
-  font-weight: 700;
-  text-transform: uppercase;
-  font-size: 0.8rem;
-  letter-spacing: 0.5px;
-}
+    tr:hover {
+      background: #2d3342;
+    }
 
-tr:hover {
-  background: #2d3342;
-}
+    .analogy-title {
+      font-weight: bold;
+      color: var(--text-main);
+    }
 
-.analogy-title {
-  font-weight: bold;
-  color: var(--text-main);
-}
+    .physics-concept {
+      font-weight: bold;
+      color: var(--accent-yellow);
+    }
 
-.physics-concept {
-  font-weight: bold;
-  color: var(--accent-yellow);
-}
-
-.badge-tag {
-  display: inline-block;
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-size: 0.75rem;
-  font-weight: bold;
-  margin-right: 4px;
-}
-.badge-surface { background: #0284c7; color: #fff; }
-.badge-mid { background: #4f46e5; color: #fff; }
-.badge-deep { background: #475569; color: #fff; }
-
+    .badge-tag {
+      display: inline-block;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      font-weight: bold;
+      margin-right: 4px;
+    }
+    .badge-surface { background: #0284c7; color: #fff; }
+    .badge-mid { background: #4f46e5; color: #fff; }
+    .badge-deep { background: #475569; color: #fff; }
 
   </style>
-  <!-- KaTeX for LaTeX rendering -->
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
-    onload="renderMathInElement(document.body, {
-      delimiters: [
-        {left: '$$', right: '$$', display: true},
-        {left: '$', right: '$', display: false}
-      ],
-      throwOnError: false
-    });"></script>
-
 </head>
 <body>
-
 
   <header>
     <h1>✈️ Photoelectric Effect Simulator: Prison Escape</h1>
     <p>Connecting macroscopic analogies to microscopic quantum physics phenomena.</p>
   </header>
 
-
   <div class="container">
     <!-- Control Panel -->
     <div class="controls-card">
       <h3 style="color: var(--accent-blue);">Simulation Controls</h3>
 
+      <!-- Playback Controls (Pause / Play & Reset) -->
+      <div class="playback-buttons">
+        <button class="btn-playback btn-pause" id="btn-pause" onclick="togglePause()">
+          <span id="pause-icon">⏸️</span> <span id="pause-text">Pause</span>
+        </button>
+        <button class="btn-playback btn-reset" onclick="resetSimulation()">
+          <span>🔄</span> Reset
+        </button>
+      </div>
 
-  <!-- Playback Controls (Pause / Play & Reset) -->
-  <div class="playback-buttons">
-    <button class="btn-playback btn-pause" id="btn-pause" onclick="togglePause()">
-      <span id="pause-icon">⏸️</span> <span id="pause-text">Pause</span>
-    </button>
-    <button class="btn-playback btn-reset" onclick="resetSimulation()">
-      <span>🔄</span> Reset
-    </button>
-  </div>
+      <!-- 1. Plane Target Position -->
+      <div class="control-group">
+        <label>Target Cell Position</label>
+        <div class="target-buttons">
+          <button class="btn-target" id="btn-deep" onclick="setTarget('deep')">Deep Cell<br><small>(-8.0 eV)</small></button>
+          <button class="btn-target" id="btn-mid" onclick="setTarget('mid')">Mid-Depth<br><small>(-4.0 eV)</small></button>
+          <button class="btn-target active" id="btn-surface" onclick="setTarget('surface')">Surface<br><small>(-1.0 eV)</small></button>
+        </div>
+      </div>
 
-  <!-- 1. Plane Target Position -->
-  <div class="control-group">
-    <label>Target Cell Position</label>
-    <div class="target-buttons">
-      <button class="btn-target active" id="btn-surface" onclick="setTarget('surface')">Surface<br><small>(Top Right: -1.0 eV)</small></button>
-      <button class="btn-target" id="btn-mid" onclick="setTarget('mid')">Mid-Depth<br><small>(Center: -4.0 eV)</small></button>
-      <button class="btn-target" id="btn-deep" onclick="setTarget('deep')">Deep Cell<br><small>(Bot Left: -8.0 eV)</small></button>
+      <!-- 2. Rescue Pack Size / Energy -->
+      <div class="control-group">
+        <label>
+          <span>Rescue Pack Energy (<i>E</i> = <i>hf</i>)</span>
+          <span class="value-badge" id="val-pack">5.0 eV</span>
+        </label>
+        <input type="range" id="input-pack" min="1" max="10" step="0.5" value="5" oninput="updateControls()">
+        <small style="color: var(--text-muted);">Higher energy corresponds to higher frequency (<i>f</i>).</small>
+      </div>
+
+      <!-- 3. Drop Rate / Intensity -->
+      <div class="control-group">
+        <label>
+          <span>Drop Rate / Light Intensity</span>
+          <span class="value-badge" id="val-rate">2 packs/s</span>
+        </label>
+        <input type="range" id="input-rate" min="1" max="5" value="2" oninput="updateControls()">
+        <small style="color: var(--text-muted);">Side-by-side packs dropped per second.</small>
+      </div>
+
+      <!-- 4. External Voltage -->
+      <div class="control-group">
+        <label>
+          <span>External Voltage (<i>V</i>)</span>
+          <span class="value-badge" id="val-voltage">0.0 V</span>
+        </label>
+        <input type="range" id="input-voltage" min="-5" max="5" step="0.5" value="0" oninput="updateControls()">
+        <small style="color: var(--text-muted);">-<i>V</i> = Guards (👮‍♂️) | +<i>V</i> = Attractors (💃)</small>
+      </div>
+
+      <!-- Live Physics Breakdown -->
+      <div style="background: #111827; padding: 12px; border-radius: 8px; font-size: 0.85rem; line-height: 1.5;">
+        <div style="color: var(--accent-yellow); font-weight: bold; margin-bottom: 4px;">Energy Balance (eV):</div>
+        <div>Photon Energy (<i>E</i>): <span id="calc-e">5.0 eV</span></div>
+        <div>Work Function (&Phi;): <span id="calc-phi">-1.0 eV</span></div>
+        <div>Kinetic Energy (<i>K</i><sub>0</sub>): <span id="calc-k" style="color: var(--accent-green); font-weight: bold;">4.0 eV</span></div>
+      </div>
     </div>
-  </div>
 
-  <!-- 2. Rescue Pack Size / Energy -->
-  <div class="control-group">
-    <label>
-      <span>Rescue Pack Energy (<i>E</i> = <i>hf</i>)</span>
-      <span class="value-badge" id="val-pack">5.0 eV</span>
-    </label>
-    <input type="range" id="input-pack" min="1" max="10" step="0.5" value="5" oninput="updateControls()">
-    <small style="color: var(--text-muted);">Higher energy corresponds to higher frequency (<i>f</i>).</small>
-  </div>
+    <!-- Simulation View -->
+    <div class="sim-card">
+      <div class="sim-header">
+        <div class="stat-item">
+          <span style="color: var(--text-muted); font-size: 0.75rem;">ESCAPE RATE</span>
+          <span class="stat-value" id="disp-rate">0.0 /s</span>
+        </div>
+        <div class="stat-item">
+          <span style="color: var(--text-muted); font-size: 0.75rem;">PHOTOCURRENT</span>
+          <span class="stat-value" id="disp-current">0.0 µA</span>
+        </div>
+        <div class="stat-item">
+          <span style="color: var(--text-muted); font-size: 0.75rem;">STATUS</span>
+          <span class="stat-value" id="disp-status" style="color: var(--accent-green);">Ready</span>
+        </div>
+      </div>
 
-  <!-- 3. Drop Rate / Intensity -->
-  <div class="control-group">
-    <label>
-      <span>Drop Rate / Light Intensity</span>
-      <span class="value-badge" id="val-rate">2 packs/s</span>
-    </label>
-    <input type="range" id="input-rate" min="1" max="5" value="2" oninput="updateControls()">
-    <small style="color: var(--text-muted);">Side-by-side packs dropped per second.</small>
-  </div>
-
-  <!-- 4. External Voltage -->
-  <div class="control-group">
-    <label>
-      <span>External Voltage (<i>V</i>)</span>
-      <span class="value-badge" id="val-voltage">0.0 V</span>
-    </label>
-    <input type="range" id="input-voltage" min="-5" max="5" step="0.5" value="0" oninput="updateControls()">
-    <small style="color: var(--text-muted);">-<i>V</i> = Guards (👮‍♂️) | +<i>V</i> = Attractors (💃)</small>
-  </div>
-
-  <!-- Live Physics Breakdown -->
-  <div style="background: #111827; padding: 12px; border-radius: 8px; font-size: 0.85rem; line-height: 1.5;">
-    <div style="color: var(--accent-yellow); font-weight: bold; margin-bottom: 4px;">Energy Balance (eV):</div>
-    <div>Photon Energy (<i>E</i>): <span id="calc-e">5.0 eV</span></div>
-    <div>Work Function (&Phi;): <span id="calc-phi">-1.0 eV</span></div>
-    <div>Kinetic Energy (<i>K</i><sub>0</sub>): <span id="calc-k" style="color: var(--accent-green); font-weight: bold;">4.0 eV</span></div>
-  </div>
-</div>
-
-<!-- Simulation View -->
-<div class="sim-card">
-  <div class="sim-header">
-    <div class="stat-item">
-      <span style="color: var(--text-muted); font-size: 0.75rem;">ESCAPE RATE</span>
-      <span class="stat-value" id="disp-rate">0.0 /s</span>
+      <canvas id="simCanvas" width="700" height="420"></canvas>
     </div>
-    <div class="stat-item">
-      <span style="color: var(--text-muted); font-size: 0.75rem;">PHOTOCURRENT</span>
-      <span class="stat-value" id="disp-current">0.0 µA</span>
-    </div>
-    <div class="stat-item">
-      <span style="color: var(--text-muted); font-size: 0.75rem;">STATUS</span>
-      <span class="stat-value" id="disp-status" style="color: var(--accent-green);">Ready</span>
-    </div>
-  </div>
-
-  <canvas id="simCanvas" width="700" height="420"></canvas>
-</div>
-
 
   </div>
-
 
   <!-- Reference Mapping Table -->
-
-
   <div class="reference-section">
     <h2>📋 Pedagogical Mapping & Physics Reference Table</h2>
     <table>
@@ -485,7 +462,6 @@ tr:hover {
       </tbody>
     </table>
   </div>
-
 
   <script>
     const canvas = document.getElementById('simCanvas');
@@ -850,8 +826,14 @@ tr:hover {
     }
 
     function drawPack(pack) {
-      ctx.font = '16px sans-serif';
-      ctx.fillText('📦', pack.x - 8, pack.y);
+      // Map energy (1 to 10) to a font size
+      const baseSize = 10;
+      const sizeMultiplier = 1.5;
+      const fontSize = Math.round(baseSize + pack.energy * sizeMultiplier);
+      
+      ctx.font = `${fontSize}px sans-serif`;
+      // Center the icon horizontally based on the calculated font size
+      ctx.fillText('📦', pack.x - (fontSize / 2) + 2, pack.y);
     }
 
     function drawPrisoner(pr) {
@@ -886,7 +868,6 @@ tr:hover {
     updateControls();
     requestAnimationFrame(animate);
   </script>
-
 
 </body>
 </html>
